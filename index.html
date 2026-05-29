@@ -377,6 +377,35 @@
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
 </script> <script>
+    // Check if user is logged in right away on boot
+    window.addEventListener('DOMContentLoaded', () => {
+        const userSession = localStorage.getItem('userLoggedIn');
+        const authContainer = document.getElementById('authContainer');
+        const mainContainer = document.getElementById('mainContainer');
+
+        if (userSession === 'true') {
+            if(authContainer) authContainer.classList.add('hidden');
+            if(mainContainer) mainContainer.classList.remove('hidden');
+        } else {
+            if(mainContainer) mainContainer.classList.add('hidden');
+            if(authContainer) authContainer.classList.remove('hidden');
+        }
+        
+        // Check for referral code in link
+        const urlParams = new URLSearchParams(window.location.search);
+        const refCode = urlParams.get('ref');
+        if(refCode) {
+            toggleAuthMode('signup');
+            document.getElementById('suReferrer').value = refCode;
+        }
+    });
+
+    function handleSignOut() {
+        localStorage.removeItem('userLoggedIn');
+        alert("Signed out successfully!");
+        window.location.reload();
+   
+    } <script>
         // Tab Router Routing Mechanism State Management Engine 
         function switchPanel(panelId) {
             document.querySelectorAll('.panel-section').forEach(element => {
