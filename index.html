@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORTUNE EARNERS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandBlue: '#1E40AF',
+                        brandYellow: '#FBBF24',
+                        brandPink: '#EC4899',
+                        brandRed: '#EF4444',
+                        darkBg: '#0F172A'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-darkBg text-slate-100 font-sans min-h-screen">
+
+    <div id="authContainer" class="hidden flex flex-col justify-center items-center min-h-screen px-4">
+        <div class="bg-slate-900 border border-brandPink p-8 rounded-2xl shadow-xl w-full max-w-md">
+            <h1 class="text-3xl font-extrabold text-center text-brandYellow mb-2">FORTUNE EARNERS</h1>
+            <p class="text-sm text-slate-400 text-center mb-6">Promote Your Business To Thousands Of Users</p>
+
+            <form id="signupForm" class="space-y-4 hidden">
+                <h2 class="text-xl font-bold text-brandPink">Create Account</h2>
+                <div>
+                    <label class="block text-xs uppercase text-slate-400 font-semibold mb-1">Username</label>
+                    <input type="text" id="suUsername" required class="w-full p-3 rounded bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-brandBlue">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase text-slate-400 font-semibold mb-1">Email Address</label>
+                    <input type="email" id="suEmail" required class="w-full p-3 rounded bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-brandBlue">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase text-slate-400 font-semibold mb-1">Password</label>
+                    <input type="password" id="suPassword" required class="w-full p-3 rounded bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-brandBlue">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase text-slate-400 font-semibold mb-1">Referred By</label>
+                    <input type="text" id="suReferrer" readonly class="w-full p-3 rounded bg-slate-800/50 border border-slate-700 text-brandYellow font-bold focus:outline-none cursor-not-allowed">
+                </div>
+                <button type="submit" class="w-full bg-brandPink text-white font-bold py-3 rounded hover:bg-pink-600 transition duration-200">SIGN UP</button>
+                <p class="text-center text-sm mt-4 text-slate-400">Already have an account? <span onclick="toggleAuthMode('signin')" class="text-brandYellow cursor-pointer underline">Sign in</span></p>
+            </form>
+
+            <form id="signinForm" class="space-y-4">
+                <h2 class="text-xl font-bold text-brandBlue">Welcome Back</h2>
+                <div>
+                    <label class="block text-xs uppercase text-slate-400 font-semibold mb-1">Email Address</label>
+                    <input type="email" id="siEmail" required class="w-full p-3 rounded bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-brandBlue">
+                </div>
+                <div>
+                    <label class="block text-xs uppercase text-slate-400 font-semibold mb-1">Password</label>
+                    <input type="password" id="siPassword" required class="w-full p-3 rounded bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-brandBlue">
+                </div>
+                <button type="submit" class="w-full bg-brandBlue text-white font-bold py-3 rounded hover:bg-blue-700 transition duration-200">SIGN IN</button>
+                <p class="text-center text-sm mt-4 text-slate-400">New to the platform? <span onclick="toggleAuthMode('signup')" class="text-brandPink cursor-pointer underline">Sign up</span></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="appContainer" class="block min-h-screen pb-24">
+        
+        <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-40 px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <button onclick="toggleHamburger(true)" class="text-2xl text-white hover:text-brandYellow focus:outline-none">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <span onclick="switchPanel('dashboard')" class="text-xl font-black text-brandYellow cursor-pointer tracking-wider">FORTUNE EARNERS</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <div class="bg-slate-800 px-3 py-1 rounded-full border border-brandPink text-xs font-bold text-brandPink">
+                    Plan: <span id="navPlanBadge">NONE</span>
+                </div>
+            </div>
+        </header>
+
+        <div id="hamburgerMenu" class="fixed inset-0 bg-black/70 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out">
+            <div class="w-72 bg-slate-900 h-full p-5 border-r border-brandPink flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-center mb-8">
+                        <span class="font-extrabold text-brandYellow">NAVIGATION</span>
+                        <button onclick="toggleHamburger(false)" class="text-xl text-brandRed"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <nav class="space-y-1">
+                        <button onclick="switchPanel('dashboard')" class="w-full text-left py-3 px-4 rounded text-slate-300 hover:bg-slate-800 hover:text-white flex items-center gap-3"><i class="fa-solid fa-house text-brandBlue"></i> Dashboard (Home)</button>
+                        <button onclick="switchPanel('tasks')" class="w-full text-left py-3 px-4 rounded text-slate-300 hover:bg-slate-800 hover:text-white flex items-center gap-3"><i class="fa-solid fa-list-check text-brandYellow"></i> Daily Tasks</button>
+                        <button onclick="switchPanel('sponsored')" class="w-full text-left py-3 px-4 rounded text-slate-300 hover:bg-slate-800 hover:text-white flex items-center gap-3"><i class="fa-solid fa-rectangle-ad text-brandPink"></i> Sponsored Ads</button>
+                        <button onclick="switchPanel('activation')" class="w-full text-left py-3 px-4 rounded text-slate-300 hover:bg-slate-800 hover:text-white flex items-center gap-3"><i class="fa-solid fa-bolt text-brandYellow"></i> Activate A Plan</button>
+                        <button onclick="switchPanel('referrals')" class="w-full text-left py-3 px-4 rounded text-slate-300 hover:bg-slate-800 hover:text-white flex items-center gap-3"><i class="fa-solid fa-users text-brandBlue"></i> Referrals</button>
+                        <button onclick="switchPanel('placeads')" class="w-full text-left py-3 px-4 rounded text-slate-300 hover:bg-slate-800 hover:text-white flex items-center gap-3"><i class="fa-solid fa-bullhorn text-brandPink"></i> Place Ads</button>
+                        <button onclick="switchPanel('about')" class="w-full text-left py-3 px-4 rounded text-slate-300 hover:bg-slate-800 hover:text-white flex items-center gap-3"><i class="fa-solid fa-circle-info text-slate-400"></i> About Us</button>
+                        <a href="https://t.me/Dani_Tech01" target="_blank" class="w-full block text-left py-3 px-4 rounded text-slate-300 hover:bg-slate-800 hover:text-white flex items-center gap-3"><i class="fa-solid fa-headset text-brandRed"></i> Contact Support</a>
+                    </nav>
+                </div>
+                <button onclick="handleLogout()" class="w-full bg-brandRed py-2.5 rounded font-bold hover:bg-red-700 text-center"><i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>Log Out</button>
+            </div>
+        </div>
+
+        <main class="max-w-md mx-auto p-4 space-y-6">
+            
+            <section id="panel-dashboard" class="panel-section space-y-4">
+                <div class="bg-gradient-to-r from-slate-900 to-slate-800 p-5 rounded-2xl border border-slate-800 flex justify-between items-center">
+                    <div>
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Welcome back,</p>
+                        <h2 id="dashUsername" class="text-2xl font-black text-brandYellow">Loading...</h2>
+                    </div>
+                    <i class="fa-solid fa-circle-user text-4xl text-brandBlue"></i>
+                </div>
+
+                <div class="bg-brandRed/20 border border-brandRed text-brandRed px-4 py-3 rounded-xl text-xs font-medium flex items-center gap-2">
+                    <i class="fa-solid fa-bullhorn shrink-0"></i>
+                    <span><strong>Notice:</strong> Affiliate Withdrawals are everyday and task withdrawals are every 10th and 30th of each month.</span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="switchPanel('tasks')" class="p-4 bg-slate-900 border border-brandYellow rounded-xl text-center hover:bg-slate-800 transition">
+                        <i class="fa-solid fa-list-check text-2xl text-brandYellow mb-2 block"></i>
+                        <span class="text-sm font-bold block">Daily Tasks</span>
+                    </button>
+                    <button onclick="switchPanel('sponsored')" class="p-4 bg-slate-900 border border-brandPink rounded-xl text-center hover:bg-slate-800 transition">
+                        <i class="fa-solid fa-rectangle-ad text-2xl text-brandPink mb-2 block"></i>
+                        <span class="text-sm font-bold block">Sponsored Ads</span>
+                    </button>
+                </div>
+
+                <div class="bg-slate-900 border border-brandBlue p-4 rounded-xl space-y-2">
+                    <label class="block text-xs uppercase font-bold text-brandBlue tracking-wide">Your Referral Link</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="dashRefLink" readonly value="Generating Link..." class="w-full bg-slate-800 text-xs text-slate-300 p-2.5 rounded border border-slate-700 outline-none">
+                        <button onclick="copyReferralLink()" class="bg-brandBlue text-white px-4 text-xs font-bold rounded hover:bg-blue-600 transition">Copy</button>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl flex justify-between items-center">
+                        <div>
+                            <p class="text-xs font-bold text-slate-400 uppercase">Task Wallet Balance</p>
+                            <h3 id="dashTaskBal" class="text-xl font-black text-white mt-1">₦0.00</h3>
+                        </div>
+                        <span class="p-2 bg-brandYellow/10 rounded-lg text-brandYellow"><i class="fa-solid fa-wallet"></i></span>
+                    </div>
+
+                    <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl flex justify-between items-center">
+                        <div>
+                            <p class="text-xs font-bold text-slate-400 uppercase">Affiliate Wallet Balance</p>
+                            <h3 id="dashAffBal" class="text-xl font-black text-white mt-1">₦0.00</h3>
+                        </div>
+                        <span class="p-2 bg-brandPink/10 rounded-lg text-brandPink"><i class="fa-solid fa-users-viewfinder"></i></span>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-brandBlue to-blue-900 p-4 rounded-xl flex justify-between items-center border border-blue-500/30 shadow-lg shadow-blue-950/40">
+                        <div>
+                            <p class="text-xs font-bold text-blue-200 uppercase">Total Consolidated Balance</p>
+                            <h3 id="dashTotalBal" class="text-2xl font-black text-white mt-1">₦0.00</h3>
+                        </div>
+                        <span class="p-3 bg-white/10 rounded-full text-white"><i class="fa-solid fa-money-bill-wave text-xl"></i></span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="panel-tasks" class="panel-section space-y-4 hidden">
+                <h2 class="text-2xl font-black text-brandYellow"><i class="fa-solid fa-list-check mr-2"></i>Daily Tasks Portal</h2>
+                <div id="tasksGatekeeper" class="bg-slate-900 border border-slate-800 rounded-xl p-6 text-center space-y-4">
+                    </div>
+            </section>
+
+            <section id="panel-sponsored" class="panel-section space-y-4 hidden">
+                <h2 class="text-2xl font-black text-brandPink"><i class="fa-solid fa-rectangle-ad mr-2"></i>Sponsored Ads</h2>
+                <div id="sponsoredGatekeeper" class="bg-slate-900 border border-slate-800 rounded-xl p-6 text-center space-y-4">
+                    </div>
+            </section>
+
+            <section id="panel-activation" class="panel-section space-y-4 hidden">
+                <h2 class="text-2xl font-black text-brandYellow"><i class="fa-solid fa-bolt mr-2"></i>Activation Plans</h2>
+                
+                <div class="space-y-4">
+                    <div class="bg-slate-900 border-l-4 border-brandBlue p-4 rounded-r-xl space-y-2">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-extrabold text-lg text-white">NEWBIE PLAN</h3>
+                            <span class="text-brandBlue font-black">₦750</span>
+                        </div>
+                        <p class="text-xs text-slate-400">Daily Regular Task: ₦100 | Sponsored Ad: ₦200</p>
+                        <p class="text-xs font-semibold text-brandYellow">Invite Earnings: Up to ₦3,300 structure tier matrix</p>
+                        <button onclick="purchasePlan('NEWBIE', 750)" class="w-full bg-brandBlue text-xs font-bold py-2 rounded mt-2">Activate Now</button>
+                    </div>
+
+                    <div class="bg-slate-900 border-l-4 border-brandYellow p-4 rounded-r-xl space-y-2">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-extrabold text-lg text-white">SILVER PLAN</h3>
+                            <span class="text-brandYellow font-black">₦1,500</span>
+                        </div>
+                        <p class="text-xs text-slate-400">Daily Regular Task: ₦150 | Sponsored Ad: ₦300</p>
+                        <button onclick="purchasePlan('SILVER', 1500)" class="w-full bg-brandYellow text-slate-950 text-xs font-bold py-2 rounded mt-2">Activate Now</button>
+                    </div>
+
+                    <div class="bg-slate-900 border-l-4 border-brandPink p-4 rounded-r-xl space-y-2">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-extrabold text-lg text-white">GOLD PLAN</h3>
+                            <span class="text-brandPink font-black">₦3,000</span>
+                        </div>
+                        <p class="text-xs text-slate-400">Daily Regular Task: ₦200 | Sponsored Ad: ₦400</p>
+                        <button onclick="purchasePlan('GOLD', 3000)" class="w-full bg-brandPink text-white text-xs font-bold py-2 rounded mt-2">Activate Now</button>
+                    </div>
+
+                    <div class="bg-slate-900 border-l-4 border-brandRed p-4 rounded-r-xl space-y-2">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-extrabold text-lg text-white">DIAMOND PLAN</h3>
+                            <span class="text-brandRed font-black">₦5,000</span>
+                        </div>
+                        <p class="text-xs text-slate-400">Daily Regular Task: ₦250 | Sponsored Ad: ₦500</p>
+                        <button onclick="purchasePlan('DIAMOND', 5000)" class="w-full bg-brandRed text-white text-xs font-bold py-2 rounded mt-2">Activate Now</button>
+                    </div>
+
+                    <div class="bg-slate-900 border-gradient p-4 border-l-4 border-purple-500 rounded-r-xl space-y-2">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-extrabold text-lg text-white">PREMIUM PLAN</h3>
+                            <span class="text-purple-400 font-black">₦7,000</span>
+                        </div>
+                        <p class="text-xs text-slate-400">Daily Regular Task: ₦300 | Sponsored Ad: ₦600</p>
+                        <button onclick="purchasePlan('PREMIUM', 7000)" class="w-full bg-purple-600 text-white text-xs font-bold py-2 rounded mt-2">Activate Now</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="panel-referrals" class="panel-section space-y-4 hidden">
+                <h2 class="text-2xl font-black text-brandBlue"><i class="fa-solid fa-users mr-2"></i>My Team</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-slate-900 p-4 border border-slate-800 rounded-xl text-center">
+                        <p id="totalRefCount" class="text-2xl font-extrabold text-brandBlue">0</p>
+                        <span class="text-xs text-slate-400 font-bold uppercase block">Total Referrals</span>
+                    </div>
+                    <div class="bg-slate-900 p-4 border border-slate-800 rounded-xl text-center">
+                        <p id="validRefCount" class="text-2xl font-extrabold text-brandYellow">0</p>
+                        <span class="text-xs text-slate-400 font-bold uppercase block">Valid Invites</span>
+                    </div>
+                </div>
+                
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+                    <h3 class="text-sm font-bold uppercase tracking-wider border-b border-slate-800 pb-2 mb-3 text-slate-300">Downline Tracking Logs</h3>
+                    <ul id="referralListContainer" class="divide-y divide-slate-800 text-sm space-y-2">
+                        </ul>
+                </div>
+            </section>
+
+            <section id="panel-placeads" class="panel-section space-y-4 hidden">
+                <h2 class="text-2xl font-black text-brandPink"><i class="fa-solid fa-bullhorn mr-2"></i>Grow Your Brand</h2>
+                <div class="bg-slate-900 border border-brandPink rounded-2xl p-6 text-center space-y-4">
+                    <div class="text-4xl text-brandPink"><i class="fa-solid fa-earth-africa"></i></div>
+                    <h3 class="text-xl font-black text-white">Reach Thousands Of Users Online Worldwide Via Here</h3>
+                    <p class="text-sm text-slate-400">Promote your banners, links, channels, or products inside the Fortune Earners task ecosystem instantly.</p>
+                    <a href="https://t.me/Dani_Tech01" target="_blank" class="block w-full bg-brandPink text-white font-extrabold py-3 rounded-lg shadow-lg hover:bg-pink-600 transition">Book Campaign via Telegram</a>
+                </div>
+            </section>
+
+            <section id="panel-withdraw" class="panel-section space-y-4 hidden">
+                <h2 class="text-2xl font-black text-brandRed"><i class="fa-solid fa-wallet mr-2"></i>Withdraw Portal 🚀</h2>
+                
+                <div id="bankDetailsFormWrapper" class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-3 hidden">
+                    <h3 class="text-sm font-bold text-brandYellow uppercase">Setup Settlement Bank Details</h3>
+                    <div class="space-y-3 text-xs">
+                        <div>
+                            <label class="block mb-1">Bank Name</label>
+                            <input type="text" id="wdBankName" class="w-full p-2.5 rounded bg-slate-800 border border-slate-700 text-white">
+                        </div>
+                        <div>
+                            <label class="block mb-1">Account Number</label>
+                            <input type="text" id="wdAccNo" maxlength="10" class="w-full p-2.5 rounded bg-slate-800 border border-slate-700 text-white">
+                        </div>
+                        <div>
+                            <label class="block mb-1">Account Name</label>
+                            <input type="text" id="wdAccName" class="w-full p-2.5 rounded bg-slate-800 border border-slate-700 text-white">
+                        </div>
+                        <button onclick="updateBankDetails()" class="w-full bg-brandYellow text-slate-950 font-bold py-2 rounded">Save Bank Profile</button>
+                    </div>
+                </div>
+
+                <div id="withdrawalPortalWrapper" class="space-y-4">
+                    <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-4">
+                        <div>
+                            <label class="block text-xs uppercase text-slate-400 font-bold mb-1">Select Source Wallet</label>
+                            <select id="wdWalletType" class="w-full p-3 rounded bg-slate-800 border border-slate-700 text-white text-sm">
+                                <option value="affiliate">Affiliate Wallet</option>
+                                <option value="task">Task Wallet</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase text-slate-400 font-bold mb-1">Amount to Transfer (₦)</label>
+                            <input type="number" id="wdAmountInput" class="w-full p-3 rounded bg-slate-800 border border-slate-700 text-white" placeholder="Enter amount">
+                        </div>
+                        <button onclick="processWithdrawalRequest()" class="w-full bg-brandRed text-white font-bold py-3 rounded hover:bg-red-700 transition">Process Settlement 🚀</button>
+                    </div>
+
+                    <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
+                        <h3 class="text-xs uppercase font-black text-slate-300 border-b border-slate-800 pb-2 mb-3 tracking-widest">Combined History Logs</h3>
+                        <div id="withdrawalHistoryList" class="text-xs text-slate-400 space-y-2">
+                            </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="panel-profile" class="panel-section space-y-4 hidden">
+                <h2 class="text-2xl font-black text-white"><i class="fa-solid fa-user-gear mr-2"></i>My Profile</h2>
+                <div class="bg-slate-900 border border-slate-800 p-5 rounded-2xl space-y-4 text-sm">
+                    <div class="flex justify-between border-b border-slate-800 pb-2">
+                        <span class="text-slate-400">Username:</span>
+                        <span id="profUsername" class="font-bold text-brandYellow">Loading...</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-800 pb-2">
+                        <span class="text-slate-400">Email:</span>
+                        <span id="profEmail" class="font-bold">Loading...</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-800 pb-2">
+                        <span class="text-slate-400">Active Tier Level:</span>
+                        <span id="profPlan" class="font-bold text-brandPink">Loading...</span>
+                    </div>
+                    
+                    <button onclick="triggerBankDetailFormUpdate()" class="w-full bg-slate-800 border border-slate-700 text-xs py-2 rounded text-slate-300 hover:text-white font-bold">Manage Settlement Bank Node</button>
+                </div>
+            </section>
+
+            <section id="panel-about" class="panel-section space-y-4 hidden">
+                <h2 class="text-2xl font-black text-slate-300">About FORTUNE EARNERS</h2>
+                <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 text-sm text-slate-300 leading-relaxed space-y-3">
+                    <p>Welcome to <strong>FORTUNE EARNERS</strong>, a premium performance micro-task utility app built to maximize individual ad interactions worldwide.</p>
+                    <p>Members can generate daily returns simply by processing regular web testing validation routines or watching distributed affiliate marketing campaigns. Expand your team network layer matrix to trigger rapid immediate payouts directly to your standard local structural bank layout systems.</p>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="fixed bottom-0 left-0 right-0 bg-slate-900 border-t border-slate-800 px-2 py-2 flex justify-around items-center z-40">
+            <button onclick="switchPanel('dashboard')" class="flex flex-col items-center gap-1 p-2 text-brandYellow font-bold text-xs">
+                <i class="fa-solid fa-house text-lg"></i><span>Dashboard</span>
+            </button>
+            <button onclick="switchPanel('placeads')" class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-brandPink text-xs">
+                <i class="fa-solid fa-bullhorn text-lg"></i><span>Place Ads</span>
+            </button>
+            <button onclick="switchPanel('withdraw')" class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-brandRed text-xs">
+                <i class="fa-solid fa-money-bill-transfer text-lg"></i><span>Withdraw 🚀</span>
+            </button>
+            <button onclick="switchPanel('profile')" class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-blue-400 text-xs">
+                <i class="fa-solid fa-user text-lg"></i><span>Profile</span>
+            </button>
+        </footer>
+
+    </div>
+
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyBg3B9ikmywdLle8Ef7-7wHkX11V2aaiPY",
+    authDomain: "my-fortune-earner.firebaseapp.com",
+    projectId: "my-fortune-earner",
+    storageBucket: "my-fortune-earner.firebasestorage.app",
+    messagingSenderId: "443746717349",
+    appId: "1:443746717349:web:735b2bc5ad919cd1db074c",
+    measurementId: "G-XP4L54L22X"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+        // Tab Router Routing Mechanism State Management Engine 
+        function switchPanel(panelId) {
+            document.querySelectorAll('.panel-section').forEach(element => {
+                element.classList.add('hidden');
+            });
+            const targetedPanel = document.getElementById(`panel-${panelId}`);
+            if(targetedPanel) {
+                targetedPanel.classList.remove('hidden');
+            }
+            toggleHamburger(false);
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function toggleHamburger(openState) {
+            const menu = document.getElementById('hamburgerMenu');
+            if(openState) {
+                menu.classList.remove('-translate-x-full');
+            } else {
+                menu.classList.add('-translate-x-full');
+            }
+        }
+
+        function toggleAuthMode(mode) {
+            const signupForm = document.getElementById('signupForm');
+            const signinForm = document.getElementById('signinForm');
+            if(mode === 'signup') {
+                signupForm.classList.remove('hidden');
+                signinForm.classList.add('hidden');
+            } else {
+                signupForm.classList.add('hidden');
+                signinForm.classList.remove('hidden');
+            }
+        }
+
+        // Initialize state tracking rules on direct boot context wrapper window parameters
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const refCode = urlParams.get('ref');
+            if(refCode) {
+                toggleAuthMode('signup');
+                document.getElementById('suReferrer').value = refCode;
+            }
+        });
+
+        function copyReferralLink() {
+            const copyText = document.getElementById("dashRefLink");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+            alert("Referral URL successfully copied to clipboard: " + copyText.value);
+        }
+
+        function triggerBankDetailFormUpdate() {
+            switchPanel('withdraw');
+            document.getElementById('bankDetailsFormWrapper').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
