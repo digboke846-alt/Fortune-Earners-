@@ -25,64 +25,64 @@
 <body class="bg-darkBg text-slate-100 font-sans min-h-screen">
 
     <div id="authContainer" class="flex flex-col justify-center items-center min-h-screen p-4">
-    <div class="bg-slate-900 border border-brandPink p-8 rounded-lg w-full max-w-md">
-        <h1 class="text-3xl font-extrabold text-center text-white mb-2">FORTUNE EARNERS</h1>
-        <p class="text-sm text-slate-400 text-center mb-6">Promoting financial growth and stability</p>
+        <div class="bg-slate-900 border border-brandPink p-8 rounded-lg w-full max-w-md">
+            <h1 class="text-3xl font-extrabold text-center text-white mb-2">FORTUNE EARNERS</h1>
+            <p class="text-sm text-slate-400 text-center mb-6">Promoting financial growth and stability</p>
 
-        <form id="signupForm" class="space-y-4 hidden" onsubmit="event.preventDefault(); handleSignUp(document.getElementById('suEmail').value, document.getElementById('suPassword').value, document.getElementById('suUsername').value, document.getElementById('suReferrer').value);">
-            <h2 class="text-xl font-bold text-brandPink">Create Account</h2>
-            
-            <div>
-                <label class="block text-xs uppercase text-slate-400 mb-1">Username</label>
-                <input type="text" id="suUsername" required class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="Choose a unique username">
-            </div>
+            <form id="signupForm" class="space-y-4 hidden" onsubmit="event.preventDefault(); handleSignUp(document.getElementById('suEmail').value, document.getElementById('suPassword').value, document.getElementById('suUsername').value, document.getElementById('suReferrer').value);">
+                <h2 class="text-xl font-bold text-brandPink">Create Account</h2>
+                
+                <div>
+                    <label class="block text-xs uppercase text-slate-400 mb-1">Username</label>
+                    <input type="text" id="suUsername" required class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="Choose a unique username">
+                </div>
 
-            <div>
-                <label class="block text-xs uppercase text-slate-400 mb-1">Email Address</label>
-                <input type="email" id="suEmail" required class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="Enter your email">
-            </div>
+                <div>
+                    <label class="block text-xs uppercase text-slate-400 mb-1">Email Address</label>
+                    <input type="email" id="suEmail" required class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="Enter your email">
+                </div>
 
-            <div>
-                <label class="block text-xs uppercase text-slate-400 mb-1">Password</label>
-                <input type="password" id="suPassword" required class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="••••••••">
-            </div>
+                <div>
+                    <label class="block text-xs uppercase text-slate-400 mb-1">Password</label>
+                    <input type="password" id="suPassword" required class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="••••••••">
+                </div>
 
-            <div>
-                <label class="block text-xs uppercase text-slate-400 mb-1">Referrer ID (Optional)</label>
-                <input type="text" id="suReferrer" readonly class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-slate-500 text-sm">
-            </div>
+                <div>
+                    <label class="block text-xs uppercase text-slate-400 mb-1">Referrer ID (Optional)</label>
+                    <input type="text" id="suReferrer" readonly class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-slate-500 text-sm">
+                </div>
 
-            <button type="submit" class="w-full bg-brandPink text-white font-bold p-2 rounded transition uppercase tracking-wider hover:opacity-90">Sign Up</button>
-            <p class="text-center text-sm mt-4 text-slate-400">Already have an account? <span onclick="toggleAuthMode('signin')" class="text-brandPink cursor-pointer underline">Sign in</span></p>
-        </form>
+                <button type="submit" class="w-full bg-brandPink text-white font-bold p-2 rounded transition uppercase tracking-wider hover:opacity-90">Sign Up</button>
+                <p class="text-center text-sm mt-4 text-slate-400">Already have an account? <span onclick="toggleAuthMode('signin')" class="text-brandPink cursor-pointer underline">Sign in</span></p>
+            </form>
 
-        <form id="signinForm" class="space-y-4" onsubmit="event.preventDefault(); handleSignIn(document.getElementById('siEmail').value, document.getElementById('siPassword').value);">
-            <h2 class="text-xl font-bold text-brandBlue">Welcome Back</h2>
-            
-            <div>
-                <label class="block text-xs uppercase text-slate-400 mb-1">Email Address</label>
-                <input type="email" id="siEmail" required class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="Enter your email">
-            </div>
+            <form id="signinForm" class="space-y-4" onsubmit="event.preventDefault(); handleSignIn(document.getElementById('siEmail').value, document.getElementById('siPassword').value);">
+                <h2 class="text-xl font-bold text-brandBlue">Welcome Back</h2>
+                
+                <div>
+                    <label class="block text-xs uppercase text-slate-400 mb-1">Email Address</label>
+                    <input type="email" id="siEmail" required class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="Enter your email">
+                </div>
 
-            <div>
-                <label class="block text-xs uppercase text-slate-400 mb-1">Password</label>
-                <input type="password" id="siPassword" required class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="••••••••">
-            </div>
+                <div>
+                    <label class="block text-xs uppercase text-slate-400 mb-1">Password</label>
+                    <input type="password" id="siPassword" required class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="••••••••">
+                </div>
 
-            <button type="submit" class="w-full bg-brandBlue text-white font-bold p-2 rounded transition uppercase tracking-wider hover:opacity-90">Sign In</button>
-            <p class="text-center text-sm mt-4 text-slate-400">New to the platform? <span onclick="toggleAuthMode('signup')" class="text-brandPink cursor-pointer underline">Sign up</span></p>
-        </form>
+                <button type="submit" class="w-full bg-brandBlue text-white font-bold p-2 rounded transition uppercase tracking-wider hover:opacity-90">Sign In</button>
+                <p class="text-center text-sm mt-4 text-slate-400">New to the platform? <span onclick="toggleAuthMode('signup')" class="text-brandPink cursor-pointer underline">Sign up</span></p>
+            </form>
+        </div>
     </div>
-    </div>
 
-    <div id="appContainer" class="hidden block min-h-screen pb-24">
+    <div id="appContainer" class="hidden min-h-screen pb-24">
         
         <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-40 px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-3">
                 <button onclick="toggleHamburger(true)" class="text-2xl text-white hover:text-brandYellow focus:outline-none">
                     <i class="fa-solid fa-bars"></i>
                 </button>
-                <span onclick="switchPanel('dashboard')" class="text-xl font-black text-brandYellow cursor-pointer tracking-wider">FORTUNE EARNERS</span>
+                <span onclick="switchPanel('dashboard')" class="text-xl font-black text-brandYellow tracking-wider cursor-pointer">FORTUNE EARNERS</span>
             </div>
             <div class="flex items-center space-x-2">
                 <div class="bg-slate-800 px-3 py-1 rounded-full border border-brandPink text-xs font-bold text-brandPink">
@@ -177,14 +177,16 @@
 
             <section id="panel-tasks" class="panel-section space-y-4 hidden">
                 <h2 class="text-2xl font-black text-brandYellow"><i class="fa-solid fa-list-check mr-2"></i>Daily Tasks Portal</h2>
-                <div id="tasksGatekeeper" class="bg-slate-900 border border-slate-800 rounded-xl p-6 text-center space-y-4">
-                    </div>
+                <div id="tasksGatekeeper" class="space-y-3">
+                    <p class="text-slate-400 text-sm text-center py-4">Loading active tasks...</p>
+                </div>
             </section>
 
             <section id="panel-sponsored" class="panel-section space-y-4 hidden">
                 <h2 class="text-2xl font-black text-brandPink"><i class="fa-solid fa-rectangle-ad mr-2"></i>Sponsored Ads</h2>
-                <div id="sponsoredGatekeeper" class="bg-slate-900 border border-slate-800 rounded-xl p-6 text-center space-y-4">
-                    </div>
+                <div id="sponsoredGatekeeper" class="space-y-3">
+                    <p class="text-slate-400 text-sm text-center py-4">Loading active ads...</p>
+                </div>
             </section>
 
             <section id="panel-activation" class="panel-section space-y-4 hidden">
@@ -228,7 +230,7 @@
                         <button onclick="purchasePlan('DIAMOND', 5000)" class="w-full bg-brandRed text-white text-xs font-bold py-2 rounded mt-2">Activate Now</button>
                     </div>
 
-                    <div class="bg-slate-900 border-gradient p-4 border-l-4 border-purple-500 rounded-r-xl space-y-2">
+                    <div class="bg-slate-900 p-4 border-l-4 border-purple-500 rounded-r-xl space-y-2">
                         <div class="flex justify-between items-center">
                             <h3 class="font-extrabold text-lg text-white">PREMIUM PLAN</h3>
                             <span class="text-purple-400 font-black">₦7,000</span>
@@ -255,7 +257,8 @@
                 <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
                     <h3 class="text-sm font-bold uppercase tracking-wider border-b border-slate-800 pb-2 mb-3 text-slate-300">Downline Tracking Logs</h3>
                     <ul id="referralListContainer" class="divide-y divide-slate-800 text-sm space-y-2">
-                        </ul>
+                        <li class="text-slate-500 text-xs text-center py-2">No downline partners recorded.</li>
+                    </ul>
                 </div>
             </section>
 
@@ -310,7 +313,8 @@
                     <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
                         <h3 class="text-xs uppercase font-black text-slate-300 border-b border-slate-800 pb-2 mb-3 tracking-widest">Combined History Logs</h3>
                         <div id="withdrawalHistoryList" class="text-xs text-slate-400 space-y-2">
-                            </div>
+                            <p class="text-slate-500 text-center py-2">No settlement history found.</p>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -363,181 +367,282 @@
     </div>
 
     <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyBg3B9ikmywdLle8Ef7-7wHkX11V2aaiPY",
-    authDomain: "my-fortune-earner.firebaseapp.com",
-    projectId: "my-fortune-earner",
-    storageBucket: "my-fortune-earner.firebasestorage.app",
-    messagingSenderId: "443746717349",
-    appId: "1:443746717349:web:735b2bc5ad919cd1db074c",
-    measurementId: "G-XP4L54L22X"
-  };
+        const firebaseConfig = {
+            apiKey: "AIzaSyBg3B9ikmywdLle8Ef7-7wHkX11V2aaiPY",
+            authDomain: "my-fortune-earner.firebaseapp.com",
+            projectId: "my-fortune-earner",
+            storageBucket: "my-fortune-earner.firebasestorage.app",
+            messagingSenderId: "443746717349",
+            appId: "1:443746717349:web:735b2bc5ad919cd1db074c",
+            measurementId: "G-XP4L54L22X"
+        };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script> <script>
-    // Check if user is logged in right away on boot
-    window.addEventListener('DOMContentLoaded', () => {
-        const userSession = localStorage.getItem('userLoggedIn');
-    <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
 
-    // Your exact Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyBg3B9ikmywdLle8Ef7-7wHkX11V2aaiPY",
-        authDomain: "my-fortune-earner.firebaseapp.com",
-        projectId: "my-fortune-earner",
-        storageBucket: "my-fortune-earner.firebasestorage.app",
-        messagingSenderId: "443746717349",
-        appId: "1:443746717349:web:735b2bc5ad919cd1db074c",
-        measurementId: "G-XP4L54L22X"
-    };
+        let currentUserId = null;
+        let currentUserPlan = "NONE";
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const database = getDatabase(app);
-
-    // Track User Authentication Status & Hide/Show Containers
-    onAuthStateChanged(auth, (user) => {
-        const authContainer = document.getElementById('authContainer');
-        const appContainer = document.getElementById('appContainer');
-
-        if (user) {
-            // User logged in successfully -> Switch views
-            if (authContainer) authContainer.classList.add('hidden');
-            if (appContainer) appContainer.classList.remove('hidden');
-            
-            // Build referral link automatically
-            get(ref(database, 'users/' + user.uid)).then((snapshot) => {
-                if (snapshot.exists()) {
-                    const username = snapshot.val().username;
-                    const refLinkInput = document.getElementById('localRefLink');
-                    if (refLinkInput) {
-                        refLinkInput.value = window.location.origin + "?ref=" + username;
-                    }
-                    const dashUser = document.getElementById('dashUsername');
-                    if (dashUser) {
-                        dashUser.innerText = username;
-                    }
-                }
-            });
-        } else {
-            // User logged out -> Force login view
-            if (appContainer) appContainer.classList.add('hidden');
-            if (authContainer) authContainer.classList.remove('hidden');
-    <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-    // Your single, unified Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyBg3B9ikmywdLle8Ef7-7wHkX11V2aaiPY",
-        authDomain: "my-fortune-earner.firebaseapp.com",
-        projectId: "my-fortune-earner",
-        storageBucket: "my-fortune-earner.firebasestorage.app",
-        messagingSenderId: "443746717349",
-        appId: "1:443746717349:web:735b2bc5ad919cd1db074c",
-        measurementId: "G-XP4L54L22X"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const database = getDatabase(app);
-
-    // Monitor login/logout state dynamically
-    onAuthStateChanged(auth, (user) => {
-        const authContainer = document.getElementById('authContainer');
-        const appContainer = document.getElementById('appContainer');
-
-        if (user) {
-            if (authContainer) authContainer.classList.add('hidden');
-            if (appContainer) appContainer.classList.remove('hidden');
-            
-            get(ref(database, 'users/' + user.uid)).then((snapshot) => {
-                if (snapshot.exists()) {
-                    const username = snapshot.val().username;
-                    const refLinkInput = document.getElementById('localRefLink');
-                    if (refLinkInput) {
-                        refLinkInput.value = window.location.origin + "?ref=" + username;
-                    }
-                    const dashUser = document.getElementById('dashUsername');
-                    if (dashUser) {
-                        dashUser.innerText = username;
-                    }
-                }
-            });
-        } else {
-            if (appContainer) appContainer.classList.add('hidden');
-            if (authContainer) authContainer.classList.remove('hidden');
-        }
-    });
-
-    // Registration Handler
-    window.handleSignUp = function(email, password, username, referrer) {
-        const cleanUsername = username.trim().toLowerCase();
-        if (!cleanUsername) {
-            alert("Please enter a valid username.");
-            return;
-        }
-
-        const usernameRef = ref(database, 'usernames/' + cleanUsername);
-        get(usernameRef).then((snapshot) => {
-            if (snapshot.exists()) {
-                alert("This username is already taken.");
+        // UI View Layout Toggles
+        window.toggleAuthMode = function(mode) {
+            const signupForm = document.getElementById('signupForm');
+            const signinForm = document.getElementById('signinForm');
+            if (mode === 'signup') {
+                signupForm.classList.remove('hidden');
+                signinForm.classList.add('hidden');
             } else {
-                createUserWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
-                        const user = userCredential.user;
-                        const userProfilePromise = set(ref(database, 'users/' + user.uid), {
-                            username: cleanUsername,
-                            email: email,
-                            referrer: referrer || "none",
-                            balance: 0
-                        });
-                        const claimUsernamePromise = set(ref(database, 'usernames/' + cleanUsername), user.uid);
-
-                        Promise.all([userProfilePromise, claimUsernamePromise]).then(() => {
-                            alert("Account created successfully!");
-                        });
-                    })
-                    .catch((error) => {
-                        alert("Sign up error: " + error.message);
-                    });
+                signupForm.classList.add('hidden');
+                signinForm.classList.remove('hidden');
             }
-        }).catch((error) => {
-            alert("Database error: " + error.message);
-        });
-    }
+        };
 
-    // Sign In Handler
-    window.handleSignIn = function(email, password) {
-        signInWithEmailAndPassword(auth, email, password)
-            .then(() => {
-                alert("Welcome back!");
-            })
-            .catch((error) => {
-                alert("Sign in error: " + error.message);
+        window.toggleHamburger = function(open) {
+            const menu = document.getElementById('hamburgerMenu');
+            if (open) {
+                menu.classList.remove('-translate-x-full');
+            } else {
+                menu.classList.add('-translate-x-full');
+            }
+        };
+
+        window.switchPanel = function(panelId) {
+            const sections = document.querySelectorAll('.panel-section');
+            sections.forEach(sec => sec.classList.add('hidden'));
+            
+            const target = document.getElementById('panel-' + panelId);
+            if (target) target.classList.remove('hidden');
+            window.toggleHamburger(false);
+        };
+
+        window.copyReferralLink = function() {
+            const linkInput = document.getElementById('dashRefLink');
+            linkInput.select();
+            linkInput.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(linkInput.value);
+            alert("Referral link copied to clipboard!");
+        };
+
+        window.triggerBankDetailFormUpdate = function() {
+            const wrapper = document.getElementById('bankDetailsFormWrapper');
+            if (wrapper) wrapper.classList.toggle('hidden');
+        };
+
+        // Live Realtime Task/Ad Sync Logic
+        function setupLiveContentListeners() {
+            // Synchronize tasks live from the DB
+            onValue(ref(database, 'tasks'), (snapshot) => {
+                const container = document.getElementById('tasksGatekeeper');
+                container.innerHTML = "";
+                
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    Object.keys(data).forEach(key => {
+                        const item = data[key];
+                        const div = document.createElement('div');
+                        div.className = "bg-slate-900 border border-slate-800 p-4 rounded-xl flex justify-between items-center";
+                        div.innerHTML = `
+                            <div>
+                                <h4 class="font-bold text-white text-sm">${item.title}</h4>
+                                <p class="text-xs text-brandYellow font-semibold">+₦${item.reward}</p>
+                            </div>
+                            <button onclick="claimTaskReward('${key}', ${item.reward}, '${item.link || ''}')" class="bg-brandYellow text-slate-950 font-bold px-3 py-1.5 text-xs rounded">Earn</button>
+                        `;
+                        container.appendChild(div);
+                    });
+                } else {
+                    container.innerHTML = `<p class="text-slate-500 text-sm text-center py-4">No tasks currently active.</p>`;
+                }
             });
-    }
 
-    // Logout Handler
-    window.handleLogout = function() {
-        signOut(auth).then(() => {
-            alert("Signed out successfully!");
+            // Synchronize ads live from the DB
+            onValue(ref(database, 'sponsored_ads'), (snapshot) => {
+                const container = document.getElementById('sponsoredGatekeeper');
+                container.innerHTML = "";
+
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    Object.keys(data).forEach(key => {
+                        const item = data[key];
+                        const div = document.createElement('div');
+                        div.className = "bg-slate-900 border border-brandPink p-4 rounded-xl flex justify-between items-center";
+                        div.innerHTML = `
+                            <div>
+                                <h4 class="font-bold text-white text-sm">${item.title}</h4>
+                                <p class="text-xs text-brandPink font-semibold">+₦${item.reward}</p>
+                            </div>
+                            <button onclick="claimAdReward('${key}', ${item.reward}, '${item.link || ''}')" class="bg-brandPink text-white font-bold px-3 py-1.5 text-xs rounded">Watch</button>
+                        `;
+                        container.appendChild(div);
+                    });
+                } else {
+                    container.innerHTML = `<p class="text-slate-500 text-sm text-center py-4">No active ad campaigns right now.</p>`;
+                }
+            });
+        }
+
+        // Live Reward Claim Mechanisms
+        window.claimTaskReward = function(taskId, amt, targetUrl) {
+            if (!currentUserId) return;
+            const taskWalletRef = ref(database, `users/${currentUserId}/taskBalance`);
+            get(taskWalletRef).then((snap) => {
+                let currentBal = snap.exists() ? snap.val() : 0;
+                set(taskWalletRef, currentBal + amt).then(() => {
+                    alert(`Earned ₦${amt} successfully!`);
+                    if (targetUrl) window.open(targetUrl, '_blank');
+                });
+            });
+        };
+
+        window.claimAdReward = function(adId, amt, targetUrl) {
+            if (!currentUserId) return;
+            const taskWalletRef = ref(database, `users/${currentUserId}/taskBalance`);
+            get(taskWalletRef).then((snap) => {
+                let currentBal = snap.exists() ? snap.val() : 0;
+                set(taskWalletRef, currentBal + amt).then(() => {
+                    alert(`Ad bonus ₦${amt} credited!`);
+                    if (targetUrl) window.open(targetUrl, '_blank');
+                });
+            });
+        };
+
+        // Live Core Profile & Wallet Listeners
+        function setupLiveUserBalanceListener(uid) {
+            onValue(ref(database, 'users/' + uid), (snapshot) => {
+                if (snapshot.exists()) {
+                    const userData = snapshot.val();
+                    const username = userData.username || 'User';
+                    const userEmail = userData.email || 'None';
+                    currentUserPlan = userData.plan || 'NONE';
+
+                    const taskBal = userData.taskBalance || 0;
+                    const affBal = userData.affiliateBalance || 0;
+                    const combined = taskBal + affBal;
+
+                    // Update balances dynamically across UI elements
+                    document.getElementById('dashTaskBal').innerText = "₦" + taskBal.toFixed(2);
+                    document.getElementById('dashAffBal').innerText = "₦" + affBal.toFixed(2);
+                    document.getElementById('dashTotalBal').innerText = "₦" + combined.toFixed(2);
+
+                    document.getElementById('dashUsername').innerText = username;
+                    document.getElementById('profUsername').innerText = username;
+                    document.getElementById('profEmail').innerText = userEmail;
+                    document.getElementById('profPlan').innerText = currentUserPlan;
+                    document.getElementById('navPlanBadge').innerText = currentUserPlan;
+                    
+                    document.getElementById('dashRefLink').value = window.location.origin + "?ref=" + username;
+                }
+            });
+        }
+
+        // Global Authentication Tunnel
+        onAuthStateChanged(auth, (user) => {
+            const authContainer = document.getElementById('authContainer');
+            const appContainer = document.getElementById('appContainer');
+
+            if (user) {
+                currentUserId = user.uid;
+                if (authContainer) authContainer.classList.add('hidden');
+                if (appContainer) appContainer.classList.remove('hidden');
+                
+                setupLiveUserBalanceListener(user.uid);
+                setupLiveContentListeners();
+            } else {
+                currentUserId = null;
+                currentUserPlan = "NONE";
+                if (appContainer) appContainer.classList.add('hidden');
+                if (authContainer) authContainer.classList.remove('hidden');
+            }
         });
-    }
-</script>
+
+        // Registration Flow
+        window.handleSignUp = function(email, password, username, referrer) {
+            const cleanUsername = username.trim().toLowerCase();
+            if (!cleanUsername) {
+                alert("Please enter a valid username.");
+                return;
+            }
+
+            const usernameRef = ref(database, 'usernames/' + cleanUsername);
+            get(usernameRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    alert("This username is already taken.");
+                } else {
+                    createUserWithEmailAndPassword(auth, email, password)
+                        .then((userCredential) => {
+                            const user = userCredential.user;
+                            const userProfilePromise = set(ref(database, 'users/' + user.uid), {
+                                username: cleanUsername,
+                                email: email,
+                                referrer: referrer || "none",
+                                plan: "NONE",
+                                taskBalance: 0,
+                                affiliateBalance: 0
+                            });
+                            const claimUsernamePromise = set(ref(database, 'usernames/' + cleanUsername), user.uid);
+
+                            Promise.all([userProfilePromise, claimUsernamePromise]).then(() => {
+                                alert("Account created successfully!");
+                            });
+                        })
+                        .catch((error) => {
+                            alert("Sign up error: " + error.message);
+                        });
+                }
+            }).catch((error) => {
+                alert("Database error: " + error.message);
+            });
+        };
+
+        // Login Flow
+        window.handleSignIn = function(email, password) {
+            signInWithEmailAndPassword(auth, email, password)
+                .then(() => {
+                    alert("Welcome back!");
+                })
+                .catch((error) => {
+                    alert("Sign in error: " + error.message);
+                });
+        };
+
+        // Sign Out Flow
+        window.handleLogout = function() {
+            signOut(auth).then(() => {
+                alert("Signed out successfully!");
+            });
+        };
+
+        // Functional Operational Placeholders
+        window.purchasePlan = function(planName, price) {
+            if (!currentUserId) return;
+            set(ref(database, `users/${currentUserId}/plan`), planName).then(() => {
+                alert(`Plan successfully upgraded to ${planName}!`);
+            });
+        };
+
+        window.updateBankDetails = function() {
+            if (!currentUserId) return;
+            const bName = document.getElementById('wdBankName').value;
+            const bAcc = document.getElementById('wdAccNo').value;
+            const bUser = document.getElementById('wdAccName').value;
+
+            set(ref(database, `users/${currentUserId}/bankProfile`), {
+                bankName: bName,
+                accountNumber: bAcc,
+                accountName: bUser
+            }).then(() => {
+                alert("Bank profile successfully locked to database layer node.");
+                document.getElementById('bankDetailsFormWrapper').classList.add('hidden');
+            });
+        };
+
+        window.processWithdrawalRequest = function() { 
+            alert("Settlement gateway processing initiated via ledger..."); 
+        };
+    </script>
 </body>
 </html>
