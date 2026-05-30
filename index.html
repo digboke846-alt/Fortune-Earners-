@@ -411,7 +411,27 @@ const firebaseConfig = {
                 menu.classList.add('-translate-x-full');
             }
         };
+// Run this automatically as soon as the app finishes loading
+window.addEventListener('DOMContentLoaded', () => {
+    // 1. Check the browser URL for a referral name (e.g., ?ref=KingDavid)
+    const urlParams = new URLSearchParams(window.location.search);
+    const referrer = urlParams.get('ref');
 
+    // 2. If a referral name is detected inside the link link:
+    if (referrer) {
+        // Switch the view to the signup form automatically using your function
+        if (typeof window.toggleAuthMode === 'function') {
+            window.toggleAuthMode('signup');
+        }
+
+        // Drop the referrer name straight into your input field
+        const referralInput = document.getElementById('suReferrer');
+        if (referralInput) {
+            referralInput.value = referrer;
+        }
+    }
+}
+                       );
         window.switchPanel = function(panelId) {
             const sections = document.querySelectorAll('.panel-section');
             sections.forEach(sec => sec.classList.add('hidden'));
