@@ -436,35 +436,76 @@
             // User logged out -> Force login view
             if (appContainer) appContainer.classList.add('hidden');
             if (authContainer) authContainer.classList.remove('hidden');
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    // Your single, unified Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBg3B9ikmywdLle8Ef7-7wHkX11V2aaiPY",
+        authDomain: "my-fortune-earner.firebaseapp.com",
+        projectId: "my-fortune-earner",
+        storageBucket: "my-fortune-earner.firebasestorage.app",
+        messagingSenderId: "443746717349",
+        appId: "1:443746717349:web:735b2bc5ad919cd1db074c",
+        measurementId: "G-XP4L54L22X"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const database = getDatabase(app);
+
+    // Monitor login/logout state dynamically
+    onAuthStateChanged(auth, (user) => {
+        const authContainer = document.getElementById('authContainer');
+        const appContainer = document.getElementById('appContainer');
+
+        if (user) {
+            if (authContainer) authContainer.classList.add('hidden');
+            if (appContainer) appContainer.classList.remove('hidden');
+            
+            get(ref(database, 'users/' + user.uid)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const username = snapshot.val().username;
+                    const refLinkInput = document.getElementById('localRefLink');
+                    if (refLinkInput) {
+                        refLinkInput.value = window.location.origin + "?ref=" + username;
+                    }
+                    const dashUser = document.getElementById('dashUsername');
+                    if (dashUser) {
+                        dashUser.innerText = username;
+                    }
+                }
+            });
+        } else {
+            if (appContainer) appContainer.classList.add('hidden');
+            if (authContainer) authContainer.classList.remove('hidden');
         }
     });
 
-    // Handle Registration with Unique Username Checking
+    // Registration Handler
     window.handleSignUp = function(email, password, username, referrer) {
         const cleanUsername = username.trim().toLowerCase();
-
         if (!cleanUsername) {
             alert("Please enter a valid username.");
             return;
         }
 
         const usernameRef = ref(database, 'usernames/' + cleanUsername);
-        
         get(usernameRef).then((snapshot) => {
             if (snapshot.exists()) {
-                alert("This username is already taken. Please choose another one.");
+                alert("This username is already taken.");
             } else {
                 createUserWithEmailAndPassword(auth, email, password)
                     .then((userCredential) => {
                         const user = userCredential.user;
-                        
                         const userProfilePromise = set(ref(database, 'users/' + user.uid), {
                             username: cleanUsername,
                             email: email,
                             referrer: referrer || "none",
                             balance: 0
                         });
-
                         const claimUsernamePromise = set(ref(database, 'usernames/' + cleanUsername), user.uid);
 
                         Promise.all([userProfilePromise, claimUsernamePromise]).then(() => {
@@ -476,11 +517,11 @@
                     });
             }
         }).catch((error) => {
-            console.error("Database validation failed: ", error);
+            alert("Database error: " + error.message);
         });
     }
 
-    // Handle Sign In Actions
+    // Sign In Handler
     window.handleSignIn = function(email, password) {
         signInWithEmailAndPassword(auth, email, password)
             .then(() => {
@@ -491,7 +532,7 @@
             });
     }
 
-    // Handle Logouts
+    // Logout Handler
     window.handleLogout = function() {
         signOut(auth).then(() => {
             alert("Signed out successfully!");
