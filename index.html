@@ -388,88 +388,113 @@
     // Check if user is logged in right away on boot
     window.addEventListener('DOMContentLoaded', () => {
         const userSession = localStorage.getItem('userLoggedIn');
-        const authContainer = document.getElementById('authContainer');
-        const mainContainer = document.getElementById('mainContainer');
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        if (userSession === 'true') {
-            if(authContainer) authContainer.classList.add('hidden');
-            if(mainContainer) mainContainer.classList.remove('hidden');
+    // Your exact Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBg3B9ikmywdLle8Ef7-7wHkX11V2aaiPY",
+        authDomain: "my-fortune-earner.firebaseapp.com",
+        projectId: "my-fortune-earner",
+        storageBucket: "my-fortune-earner.firebasestorage.app",
+        messagingSenderId: "443746717349",
+        appId: "1:443746717349:web:735b2bc5ad919cd1db074c",
+        measurementId: "G-XP4L54L22X"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const database = getDatabase(app);
+
+    // Track User Authentication Status & Hide/Show Containers
+    onAuthStateChanged(auth, (user) => {
+        const authContainer = document.getElementById('authContainer');
+        const appContainer = document.getElementById('appContainer');
+
+        if (user) {
+            // User logged in successfully -> Switch views
+            if (authContainer) authContainer.classList.add('hidden');
+            if (appContainer) appContainer.classList.remove('hidden');
+            
+            // Build referral link automatically
+            get(ref(database, 'users/' + user.uid)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const username = snapshot.val().username;
+                    const refLinkInput = document.getElementById('localRefLink');
+                    if (refLinkInput) {
+                        refLinkInput.value = window.location.origin + "?ref=" + username;
+                    }
+                    const dashUser = document.getElementById('dashUsername');
+                    if (dashUser) {
+                        dashUser.innerText = username;
+                    }
+                }
+            });
         } else {
-            if(mainContainer) mainContainer.classList.add('hidden');
-            if(authContainer) authContainer.classList.remove('hidden');
-        }
-        
-        // Check for referral code in link
-        const urlParams = new URLSearchParams(window.location.search);
-        const refCode = urlParams.get('ref');
-        if(refCode) {
-            toggleAuthMode('signup');
-            document.getElementById('suReferrer').value = refCode;
+            // User logged out -> Force login view
+            if (appContainer) appContainer.classList.add('hidden');
+            if (authContainer) authContainer.classList.remove('hidden');
         }
     });
 
-    function handleSignOut() {
-        localStorage.removeItem('userLoggedIn');
-        alert("Signed out successfully!");
-        window.location.reload();
-   
-    }
-        // Tab Router Routing Mechanism State Management Engine 
-        function switchPanel(panelId) {
-            document.querySelectorAll('.panel-section').forEach(element => {
-                element.classList.add('hidden');
-            });
-            const targetedPanel = document.getElementById(`panel-${panelId}`);
-            if(targetedPanel) {
-                targetedPanel.classList.remove('hidden');
-            }
-            toggleHamburger(false);
-            window.scrollTo({top: 0, behavior: 'smooth'});
+    // Handle Registration with Unique Username Checking
+    window.handleSignUp = function(email, password, username, referrer) {
+        const cleanUsername = username.trim().toLowerCase();
+
+        if (!cleanUsername) {
+            alert("Please enter a valid username.");
+            return;
         }
 
-        function toggleHamburger(openState) {
-            const menu = document.getElementById('hamburgerMenu');
-            if(openState) {
-                menu.classList.remove('-translate-x-full');
+        const usernameRef = ref(database, 'usernames/' + cleanUsername);
+        
+        get(usernameRef).then((snapshot) => {
+            if (snapshot.exists()) {
+                alert("This username is already taken. Please choose another one.");
             } else {
-                menu.classList.add('-translate-x-full');
-            }
-        }
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                        
+                        const userProfilePromise = set(ref(database, 'users/' + user.uid), {
+                            username: cleanUsername,
+                            email: email,
+                            referrer: referrer || "none",
+                            balance: 0
+                        });
 
-        function toggleAuthMode(mode) {
-            const signupForm = document.getElementById('signupForm');
-            const signinForm = document.getElementById('signinForm');
-            if(mode === 'signup') {
-                signupForm.classList.remove('hidden');
-                signinForm.classList.add('hidden');
-            } else {
-                signupForm.classList.add('hidden');
-                signinForm.classList.remove('hidden');
-            }
-        }
+                        const claimUsernamePromise = set(ref(database, 'usernames/' + cleanUsername), user.uid);
 
-        // Initialize state tracking rules on direct boot context wrapper window parameters
-        window.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const refCode = urlParams.get('ref');
-            if(refCode) {
-                toggleAuthMode('signup');
-                document.getElementById('suReferrer').value = refCode;
+                        Promise.all([userProfilePromise, claimUsernamePromise]).then(() => {
+                            alert("Account created successfully!");
+                        });
+                    })
+                    .catch((error) => {
+                        alert("Sign up error: " + error.message);
+                    });
             }
+        }).catch((error) => {
+            console.error("Database validation failed: ", error);
         });
+    }
 
-        function copyReferralLink() {
-            const copyText = document.getElementById("dashRefLink");
-            copyText.select();
-            copyText.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(copyText.value);
-            alert("Referral URL successfully copied to clipboard: " + copyText.value);
-        }
+    // Handle Sign In Actions
+    window.handleSignIn = function(email, password) {
+        signInWithEmailAndPassword(auth, email, password)
+            .then(() => {
+                alert("Welcome back!");
+            })
+            .catch((error) => {
+                alert("Sign in error: " + error.message);
+            });
+    }
 
-        function triggerBankDetailFormUpdate() {
-            switchPanel('withdraw');
-            document.getElementById('bankDetailsFormWrapper').classList.remove('hidden');
-        }
-    </script>
-</body>
-</html>
+    // Handle Logouts
+    window.handleLogout = function() {
+        signOut(auth).then(() => {
+            alert("Signed out successfully!");
+        });
+    }
+</script>
