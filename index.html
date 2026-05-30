@@ -24,50 +24,58 @@
 </head>
 <body class="bg-darkBg text-slate-100 font-sans min-h-screen">
 
-    <div id="authContainer" class="hidden flex flex-col justify-center items-center min-h-screen px-4">
-        <div class="bg-slate-900 border border-brandPink p-8 rounded-2xl shadow-xl w-full max-w-md">
-            <h1 class="text-3xl font-extrabold text-center text-brandYellow mb-2">FORTUNE EARNERS</h1>
-            <p class="text-sm text-slate-400 text-center mb-6">Promote Your Business To Thousands Of Users</p>
+    <div id="authContainer" class="flex flex-col justify-center items-center min-h-screen p-4">
+    <div class="bg-slate-900 border border-brandPink p-8 rounded-lg w-full max-w-md">
+        <h1 class="text-3xl font-extrabold text-center text-white mb-2">FORTUNE EARNERS</h1>
+        <p class="text-sm text-slate-400 text-center mb-6">Promoting financial growth and stability</p>
 
-            <form id="signupForm" class="space-y-4 hidden">
-                <h2 class="text-xl font-bold text-brandPink">Create Account</h2>
-                <div>
-                    <label class="block text-xs uppercase text-slate-400 font-semibold mb-1">Username</label>
-                    <input type="text" id="suUsername" required class="w-full p-3 rounded bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-brandBlue">
-                </div>
-                <div>
-                    <label class="block text-xs uppercase text-slate-400 font-semibold mb-1">Email Address</label>
-                    <input type="email" id="suEmail" required class="w-full p-3 rounded bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-brandBlue">
-                </div>
-                <div>
-                    <label class="block text-xs uppercase text-slate-400 font-semibold mb-1">Password</label>
-                    <input type="password" id="suPassword" required class="w-full p-3 rounded bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-brandBlue">
-                </div>
-                <div>
-                    <label class="block text-xs uppercase text-slate-400 font-semibold mb-1">Referred By</label>
-                    <input type="text" id="suReferrer" readonly class="w-full p-3 rounded bg-slate-800/50 border border-slate-700 text-brandYellow font-bold focus:outline-none cursor-not-allowed">
-                </div>
-                <button type="submit" class="w-full bg-brandPink text-white font-bold py-3 rounded hover:bg-pink-600 transition duration-200">SIGN UP</button>
-                <p class="text-center text-sm mt-4 text-slate-400">Already have an account? <span onclick="toggleAuthMode('signin')" class="text-brandYellow cursor-pointer underline">Sign in</span></p>
-            </form>
+        <form id="signupForm" class="space-y-4 hidden" onsubmit="event.preventDefault(); handleSignUp(document.getElementById('suEmail').value, document.getElementById('suPassword').value, document.getElementById('suUsername').value, document.getElementById('suReferrer').value);">
+            <h2 class="text-xl font-bold text-brandPink">Create Account</h2>
+            
+            <div>
+                <label class="block text-xs uppercase text-slate-400 mb-1">Username</label>
+                <input type="text" id="suUsername" required class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="Choose a unique username">
+            </div>
 
-            <form id="signinForm" class="space-y-4">
-                <h2 class="text-xl font-bold text-brandBlue">Welcome Back</h2>
-                <div>
-                    <label class="block text-xs uppercase text-slate-400 font-semibold mb-1">Email Address</label>
-                    <input type="email" id="siEmail" required class="w-full p-3 rounded bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-brandBlue">
-                </div>
-                <div>
-                    <label class="block text-xs uppercase text-slate-400 font-semibold mb-1">Password</label>
-                    <input type="password" id="siPassword" required class="w-full p-3 rounded bg-slate-800 border border-slate-700 text-white focus:outline-none focus:border-brandBlue">
-                </div>
-                <button type="submit" class="w-full bg-brandBlue text-white font-bold py-3 rounded hover:bg-blue-700 transition duration-200">SIGN IN</button>
-                <p class="text-center text-sm mt-4 text-slate-400">New to the platform? <span onclick="toggleAuthMode('signup')" class="text-brandPink cursor-pointer underline">Sign up</span></p>
-            </form>
-        </div>
+            <div>
+                <label class="block text-xs uppercase text-slate-400 mb-1">Email Address</label>
+                <input type="email" id="suEmail" required class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="Enter your email">
+            </div>
+
+            <div>
+                <label class="block text-xs uppercase text-slate-400 mb-1">Password</label>
+                <input type="password" id="suPassword" required class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="••••••••">
+            </div>
+
+            <div>
+                <label class="block text-xs uppercase text-slate-400 mb-1">Referrer ID (Optional)</label>
+                <input type="text" id="suReferrer" readonly class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-slate-500 text-sm">
+            </div>
+
+            <button type="submit" class="w-full bg-brandPink text-white font-bold p-2 rounded transition uppercase tracking-wider hover:opacity-90">Sign Up</button>
+            <p class="text-center text-sm mt-4 text-slate-400">Already have an account? <span onclick="toggleAuthMode('signin')" class="text-brandPink cursor-pointer underline">Sign in</span></p>
+        </form>
+
+        <form id="signinForm" class="space-y-4" onsubmit="event.preventDefault(); handleSignIn(document.getElementById('siEmail').value, document.getElementById('siPassword').value);">
+            <h2 class="text-xl font-bold text-brandBlue">Welcome Back</h2>
+            
+            <div>
+                <label class="block text-xs uppercase text-slate-400 mb-1">Email Address</label>
+                <input type="email" id="siEmail" required class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="Enter your email">
+            </div>
+
+            <div>
+                <label class="block text-xs uppercase text-slate-400 mb-1">Password</label>
+                <input type="password" id="siPassword" required class="w-full bg-slate-800 border border-slate-700 rounded p-2 text-white text-sm" placeholder="••••••••">
+            </div>
+
+            <button type="submit" class="w-full bg-brandBlue text-white font-bold p-2 rounded transition uppercase tracking-wider hover:opacity-90">Sign In</button>
+            <p class="text-center text-sm mt-4 text-slate-400">New to the platform? <span onclick="toggleAuthMode('signup')" class="text-brandPink cursor-pointer underline">Sign up</span></p>
+        </form>
+    </div>
     </div>
 
-    <div id="appContainer" class="block min-h-screen pb-24">
+    <div id="appContainer" class="hidden block min-h-screen pb-24">
         
         <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-40 px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-3">
