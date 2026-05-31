@@ -325,7 +325,30 @@
                     <div class="flex justify-between border-b border-slate-800 pb-2">
                         <span class="text-slate-400">Username:</span>
                         <span id="profUsername" class="font-bold text-brandYellow">Loading...</span>
-                    </div>
+                   <div class="bg-slate-900 border border-slate-800 p-5 rounded-xl shadow-md mt-6 max-w-md">
+    <h3 class="text-lg font-bold text-brandPink mb-1">Security Settings</h3>
+    <p class="text-xs text-slate-400 mb-4">Keep your Fortune Earners account secure by updating your password regularly.</p>
+    
+    <form onsubmit="event.preventDefault(); processPasswordChange();" class="space-y-3">
+        <div>
+            <label class="block text-[10px] uppercase tracking-wider text-slate-400 mb-1">Current Password</label>
+            <input type="password" id="cpCurrent" required class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white text-sm focus:outline-none focus:border-brandPink">
+        </div>
+        <div>
+            <label class="block text-[10px] uppercase tracking-wider text-slate-400 mb-1">New Password</label>
+            <input type="password" id="cpNew" required class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white text-sm focus:outline-none focus:border-brandPink">
+        </div>
+        <div>
+            <label class="block text-[10px] uppercase tracking-wider text-slate-400 mb-1">Confirm New Password</label>
+            <input type="password" id="cpConfirm" required class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white text-sm focus:outline-none focus:border-brandPink">
+        </div>
+        
+        <button type="submit" class="w-full bg-brandPink text-white font-bold text-sm py-2 px-4 rounded-lg hover:opacity-90 transition mt-2">
+            Save New Password
+        </button>
+    </form>
+      
+                   </div> </div>
                     <div class="flex justify-between border-b border-slate-800 pb-2">
                         <span class="text-slate-400">Email:</span>
                         <span id="profEmail" class="font-bold">Loading...</span>
@@ -566,7 +589,26 @@ window.addEventListener('DOMContentLoaded', () => {
             const authContainer = document.getElementById('authContainer');
             const appContainer = document.getElementById('appContainer');
 
-            if (user) {
+            if (user) {window.showWelcomePopup = function() {
+    const popup = document.getElementById('welcomePopup');
+    if (popup) popup.classList.remove('hidden');
+};
+
+window.closeWelcomePopup = function() {
+    const popup = document.getElementById('welcomePopup');
+    if (popup) popup.classList.add('hidden');
+};
+
+// Trigger this automatically inside your Firebase auth state listener!
+auth.onAuthStateChanged((user) => {
+    if (user) {
+        // User is logged in, show them the greeting message!
+        showWelcomePopup();
+        
+        // ... rest of your existing logic to load user data ...
+    }
+}
+                       );
                 currentUserId = user.uid;
                 if (authContainer) authContainer.classList.add('hidden');
                 if (appContainer) appContainer.classList.remove('hidden');
@@ -665,6 +707,36 @@ window.addEventListener('DOMContentLoaded', () => {
         window.processWithdrawalRequest = function() { 
             alert("Settlement gateway processing initiated via ledger..."); 
         };
-    </script>
+    </script> 
+    <div id="welcomePopup" class="fixed inset-0 bg-black/80 z-50 flex justify-center items-center hidden p-4">
+    <div class="bg-slate-900 border border-brandYellow p-6 rounded-2xl w-full max-w-md text-center space-y-4 shadow-2xl animate-fade-in">
+        
+        <div class="space-y-1">
+            <h2 class="text-2xl font-bold text-brandYellow">🎉 Welcome to Fortune Earners!</h2>
+            <p class="text-xs text-slate-400">Your ultimate gateway to financial freedom</p>
+        </div>
+
+        <div class="bg-slate-800/50 p-4 rounded-xl border border-slate-800 text-sm text-slate-300 text-left italic leading-relaxed">
+            "Hello Chief! We are absolutely thrilled to have you onboard. Your journey to smart, daily earnings starts right here. To stay ahead of updates, secure your earnings tracking, and meet thousands of other top earners, make sure you join our official community channels to get updated!"
+        </div>
+
+        <div class="space-y-2 pt-2">
+            <a href=https://t.me/TgEarnVault target="_blank" class="flex items-center justify-center gap-2 w-full bg-sky-600 text-white font-bold py-3 px-4 rounded-xl hover:bg-sky-500 transition shadow-lg">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-1-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.93 1.23-5.46 3.62-.51.35-.98.53-1.39.51-.46-.01-1.33-.26-1.98-.47-.8-.26-1.43-.4-1.38-.85.03-.23.35-.47.96-.71 3.76-1.63 6.27-2.71 7.53-3.23 3.58-1.48 4.32-1.74 4.8-.16z"/></svg>
+                Join Official Telegram Channel
+            </a>
+
+            <a href=https://chat.whatsapp.com/CKJ2Awq0F5F8xpaq31JJlP?mode=gi_t target="_blank" class="flex items-center justify-center gap-2 w-full bg-emerald-600 text-white font-bold py-3 px-4 rounded-xl hover:bg-emerald-500 transition shadow-lg">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 11.948.01c3.177.001 6.161 1.24 8.401 3.487 2.24 2.246 3.473 5.234 3.47 8.413-.003 6.597-5.34 11.935-11.891 11.935-2.004-.001-3.973-.507-5.714-1.472L0 24zm6.59-4.847c1.62.962 3.21 1.448 4.76 1.449 5.304 0 9.618-4.305 9.62-9.61 0-2.569-1.001-4.985-2.822-6.808s-4.244-2.827-6.814-2.827c-5.307 0-9.621 4.305-9.623 9.611-.002 1.677.452 3.315 1.312 4.757L1.13 19.781l4.587-1.203z"/></svg>
+                Join WhatsApp Channel
+            </a>
+        </div>
+
+        <button onclick="closeWelcomePopup()" class="w-full text-slate-500 hover:text-slate-300 text-xs font-semibold underline pt-2">
+            Continue to Dashboard
+        </button>
+    </div>
+</div>
+
 </body>
 </html>
